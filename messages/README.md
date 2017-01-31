@@ -15,11 +15,12 @@ curl -X POST -H "Content-Type: application/json" -d '{"message":"Eva Fineberg"}'
 echo -n "Eva Fineberg" | shasum -a 256
 9856266689cd9b96c7c54fe80aed98e7acfe2ce6f9260b227a25bd57c5a9c9d4
 curl http://ec2-54-214-173-4.us-west-2.compute.amazonaws.com/message/9856266689cd9b96c7c54fe80aed98e7acfe2ce6f9260b227a25bd57c5a9c9d4
-{"message":"Eva Fineberg"}```
-<br/>
+{"message":"Eva Fineberg"}
+```
 
 ##Example failed curl commands
-```curl -i -X POST -H "Content-Type: application/json" -d '{"blah"}' http://ec2-54-214-173-4.us-west-2.compute.amazonaws.com/message
+```bash
+curl -i -X POST -H "Content-Type: application/json" -d '{"blah"}' http://ec2-54-214-173-4.us-west-2.compute.amazonaws.com/message
    HTTP/1.1 400 Bad Request
    Date: Sat, 28 Jan 2017 20:53:04 GMT
    Content-Length: 57
@@ -50,7 +51,8 @@ curl -i http://ec2-54-214-173-4.us-west-2.compute.amazonaws.com/message/
    Date: Sat, 28 Jan 2017 21:32:21 GMT
    Content-Length: 19
 
-   404 page not found``` <br/><br/>
+   404 page not found
+```
 
 ##Notation
 Usually for more extensive restful apis I would deploy with swagger documentation.

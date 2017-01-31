@@ -39,17 +39,19 @@ cat utxos3.txt
    a84739 24
 
 ./find-pair utxos3.txt 25
-   a84739   24 ,  147bce   2```<br/>
+   a84739   24 ,  147bce   2
+```
 
 ##Success Examples Bonus
-```cat utxos4.txt
+```bash
+cat utxos4.txt
    abcdef 1
    e478ab 1
    74738a 1
    oooooo 3
-   a84739 22```<br />
+   a84739 22
 
-```./find-pair utxos4.txt 3 -bonus
+./find-pair utxos4.txt 3 -bonus
    abcdef 1 e478ab 1 74738a 1
    ./find-pair utxos4.txt 3 -bonus
-   oooooo 3```<br />
+   oooooo 3```
