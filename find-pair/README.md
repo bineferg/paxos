@@ -53,5 +53,32 @@ cat utxos4.txt
 
 ./find-pair utxos4.txt 3 -bonus
    abcdef 1 e478ab 1 74738a 1
-   ./find-pair utxos4.txt 3 -bonus
-   oooooo 3```
+./find-pair utxos4.txt 3 -bonus
+   oooooo 3
+```
+
+##Errored Examples
+```bash
+cat utxos5.txt
+    147bce 2
+    abcdef 6
+    e478ab
+    a84739 24
+
+./find-pair utxos5.txt 3
+    File contains bad input.
+
+./find-pair utxos5.txt 3 -bonus
+    File contains bad input.
+
+ cat utxos6.txt
+
+./find-pair utxos6.txt 5
+    File contains bad input.
+
+./find-pair utxos6.txt 5 -bonus
+    File contains bad input.
+ ```
+
+
+
