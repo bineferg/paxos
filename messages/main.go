@@ -7,6 +7,7 @@ import (
     "crypto/sha256"
     "encoding/hex"
     "errors"
+    "sync"
 
     "github.com/gorilla/mux"
     "github.com/asaskevich/govalidator"
@@ -33,6 +34,9 @@ type Sha_256 struct {
 //Map
 var digests = make(map[Sha_256]MessageRequest)
 
+//Mutex for global map
+var mutex  = &sync.Mutex{}
+
 //Json validator
 func (req *MessageRequest) Validate(w http.ResponseWriter, r *http.Request) error{
     if v, err := govalidator.ValidateStruct(req); !v || err != nil {
@@ -57,12 +61,13 @@ func CreateShaEndpoint(w http.ResponseWriter, req *http.Request) {
     }
 
     //hash digest
-    //var mresp MessageResponse
     h := sha256.New()
     h.Write([]byte(r.Msg))
     sha256_hash := hex.EncodeToString(h.Sum(nil))
     s := Sha_256{Digest: sha256_hash}
+    mutex.Lock()
     digests[s] = r
+    mutex.Unlock()
     json.NewEncoder(w).Encode(s)
 }
 
@@ -98,5 +103,5 @@ func main() {
     router := mux.NewRouter()
     router.HandleFunc("/message", CreateShaEndpoint).Methods("POST")
     router.HandleFunc("/message/{digest}", CreateMessageResponseEndpoint).Methods("GET")
-    log.Fatal(http.ListenAndServe(":12345", router))
+    log.Fatal(http.ListenAndServe(":8001", router))
 }
