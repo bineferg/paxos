@@ -48,8 +48,8 @@
       <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="825">
-              <caret line="55" column="62" lean-forward="true" selection-start-line="55" selection-start-column="62" selection-end-line="55" selection-end-column="62" />
+            <state relative-caret-position="765">
+              <caret line="52" column="33" lean-forward="false" selection-start-line="52" selection-start-column="33" selection-end-line="52" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -67,8 +67,8 @@
       <list>
         <option value="$PROJECT_DIR$/messages.sh" />
         <option value="$PROJECT_DIR$/nginx.conf" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/main.go" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -443,8 +443,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="825">
-          <caret line="55" column="62" lean-forward="true" selection-start-line="55" selection-start-column="62" selection-end-line="55" selection-end-column="62" />
+        <state relative-caret-position="765">
+          <caret line="52" column="33" lean-forward="false" selection-start-line="52" selection-start-column="33" selection-end-line="52" selection-end-column="33" />
           <folding />
         </state>
       </provider>

@@ -13,30 +13,32 @@ Golang 1.7 or later.<br />
 **NOTE:** To run the bonus for this challenge, use `./find-pair <file> <target> -bonus`
 
 ##Success Examples
-```cat utxos1.txt
+```bash
+cat utxos1.txt
    abcdef 5
    48a92b 7
    e478ab 10
    13474a 14
-   a84739 20```<br/>
-```./find-pair utxos1.txt 25
-   a84739   20 ,  abcdef   5```<br/>
+   a84739 20
+./find-pair utxos1.txt 25
+   a84739   20 ,  abcdef   5
 
-```cat utxos2.txt
+cat utxos2.txt
    abcdef 1
    e478ab 2
    74738a 2
-   a84739 22```<br/>
+   a84739 22
 
-```./find-pair utxos2.txt 25
-   Not possible```<br/>
+./find-pair utxos2.txt 25
+   Not possible
 
-```cat utxos3.txt
+cat utxos3.txt
    147bce 2
    abcdef 6
    e478ab 20
-   a84739 24```<br/>
-```./find-pair utxos3.txt 25
+   a84739 24
+
+./find-pair utxos3.txt 25
    a84739   24 ,  147bce   2```<br/>
 
 ##Success Examples Bonus

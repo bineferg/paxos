@@ -11,10 +11,8 @@ import (
 
 //Used for findPair and bonus
 var utxos = make(map[string]int)
-//Used for findPair
-var utxosPairs = make(map[int][]string)
-//Used for bonus
-var utxosK = make(map[int][]Utxos)
+//Used for findPair and bonus
+var utxosDiff = make(map[int][]Utxos)
 var minDiff = -1
 
 type Utxos struct {
@@ -38,22 +36,29 @@ func parseUtxos(line string) {
 
 }
 
-//Runtime - worst case O(n^2) due to possible duplicate integers with unique ids
+//Runtime - worst case O(n^2), exhaustive search must check all possible scenarios
+//Can break early if we find a difference of zero because we cannot do better than zero
 func findPair(target int) {
 	for k1, v1 := range utxos {
 		for k2, v2 :=range utxos {
 			if v1 + v2 >= target && k1 != k2 {
 				dif := (v1 + v2) - target
-				utxosPairs[dif]=[]string{k1, k2}
+				u1 := Utxos{id: k1, val: v1}
+				u2 := Utxos{id: k2, val: v2}
+				utxosDiff[dif]=[]Utxos{u1, u2}
 				if minDiff == -1 || dif < minDiff{
 					minDiff = dif
 				}
 
 			}
+			if minDiff == 0 {
+				break
+			}
 		}
 	}
-	if len(utxosPairs) != 0 {
-		fmt.Println(utxosPairs[minDiff][0], " ", utxos[utxosPairs[minDiff][0]],", ", utxosPairs[minDiff][1], " ", utxos[utxosPairs[minDiff][1]])
+	if len(utxosDiff) != 0 {
+		ulist := utxosDiff[minDiff]
+		fmt.Println(ulist[0].id, " ", ulist[0].val,", ", ulist[1].id, " ", ulist[1].val)
 	} else {
 		fmt.Println("Not possible.")
 	}
@@ -64,6 +69,8 @@ func findPair(target int) {
 /////////////////////
 //Exponential solution to variation of NP-complete problem SubsetSum
 //Run time is O(2^n) because we must consider all possible subsets
+
+
 func powerSet(ulist []Utxos) [][]Utxos {
 	if ulist == nil {
 		return nil
@@ -97,14 +104,17 @@ func subsetBonus(target int) {
 		}
 		if sum >= target {
 			dif := sum-target
-			utxosK[dif] = sub
+			utxosDiff[dif] = sub
 			if minDiff == -1 || dif < minDiff{
 				minDiff = dif
 			}
 
 		}
+		if minDiff==0 {
+			break
+		}
 	}
-	minUtxos := utxosK[minDiff]
+	minUtxos := utxosDiff[minDiff]
 	for _, u := range minUtxos {
 		fmt.Print(u.id," ",u.val," ")
 	}
