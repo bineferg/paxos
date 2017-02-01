@@ -1,26 +1,23 @@
 package main
 
 import (
-	"os"
-	"fmt"
 	"bufio"
-	"strings"
+	"fmt"
+	"os"
 	"strconv"
+	"strings"
 )
 
-
-//Used for findPair and bonus
-var utxos = make(map[string]int)
 //Used for findPair and bonus
 var utxosDiff = make(map[int][]Utxos)
 var minDiff = -1
 
 type Utxos struct {
-	id string
+	id  string
 	val int
 }
 
-func parseUtxos(line string) {
+func parseUtxos(line string) Utxos {
 	spltLn := strings.Split(line, " ")
 	if len(spltLn) != 2 {
 		fmt.Println("File contains bad input.")
@@ -32,35 +29,41 @@ func parseUtxos(line string) {
 		fmt.Println("File contains bad input.")
 		os.Exit(1)
 	}
-	utxos[key] = val
+	return Utxos{id: key, val: val}
 
 }
 
-//Runtime - worst case O(n^2), exhaustive search must check all possible scenarios
-//Can break early if we find a difference of zero because we cannot do better than zero
-func findPair(target int) {
-	for k1, v1 := range utxos {
-		for k2, v2 :=range utxos {
-			if v1 + v2 >= target && k1 != k2 {
-				dif := (v1 + v2) - target
-				u1 := Utxos{id: k1, val: v1}
-				u2 := Utxos{id: k2, val: v2}
-				utxosDiff[dif]=[]Utxos{u1, u2}
-				if minDiff == -1 || dif < minDiff{
-					minDiff = dif
-				}
+//Runtime - O(n)
+func findPair(ulist []Utxos, target int) {
+	left := 0
+	right := len(ulist) - 1
 
+	for left < right {
+		sum := ulist[left].val + ulist[right].val
+		if sum == target {
+			minDiff = 0
+			utxosDiff[minDiff] = []Utxos{ulist[left], ulist[right]}
+			break
+		}
+		if sum >= target {
+			diff := target - sum
+			if minDiff == -1 {
+				minDiff = diff
 			}
-			if minDiff == 0 {
-				break
+			if minDiff > diff {
+				minDiff = diff
 			}
+			utxosDiff[minDiff] = []Utxos{ulist[left], ulist[right]}
+			right--
+		}
+		if sum < target {
+			left++
 		}
 	}
-	if len(utxosDiff) != 0 {
-		ulist := utxosDiff[minDiff]
-		fmt.Println(ulist[0].id, " ", ulist[0].val,", ", ulist[1].id, " ", ulist[1].val)
-	} else {
+	if len(utxosDiff) == 0 {
 		fmt.Println("Not possible.")
+	} else {
+		fmt.Println(utxosDiff[minDiff][0].id, " ", utxosDiff[minDiff][0].val, ", ", utxosDiff[minDiff][1].id, " ", utxosDiff[minDiff][1].val)
 	}
 }
 
@@ -69,8 +72,6 @@ func findPair(target int) {
 /////////////////////
 //Exponential solution to variation of NP-complete problem SubsetSum
 //Run time is O(2^n) because we must consider all possible subsets
-
-
 func powerSet(ulist []Utxos) [][]Utxos {
 	if ulist == nil {
 		return nil
@@ -86,44 +87,35 @@ func powerSet(ulist []Utxos) [][]Utxos {
 	return ps
 }
 
-func subsetBonus(target int) {
-
-	ulist := make([]Utxos, len(utxos))
-	count := 0
-	for k, v :=range utxos {
-		u := Utxos{id: k, val: v}
-		ulist[count] = u
-		count++
-	}
+func subsetBonus(ulist []Utxos, target int) {
 
 	var ps = powerSet(ulist)
 	for _, sub := range ps {
-		sum :=0
+		sum := 0
 		for _, el := range sub {
-			sum+=el.val
+			sum += el.val
 		}
 		if sum >= target {
-			dif := sum-target
+			dif := sum - target
 			utxosDiff[dif] = sub
-			if minDiff == -1 || dif < minDiff{
+			if minDiff == -1 || dif < minDiff {
 				minDiff = dif
 			}
 
 		}
-		if minDiff==0 {
+		if minDiff == 0 {
 			break
 		}
 	}
 	minUtxos := utxosDiff[minDiff]
 	for _, u := range minUtxos {
-		fmt.Print(u.id," ",u.val," ")
+		fmt.Print(u.id, " ", u.val, " ")
 	}
 	fmt.Println()
 
 }
 
-
-func main(){
+func main() {
 	args := os.Args[1:]
 	if len(args) < 2 {
 		fmt.Println("Bad input, run again")
@@ -137,15 +129,19 @@ func main(){
 		os.Exit(1)
 	}
 	defer f.Close()
+	var ulist []Utxos
 	s := bufio.NewScanner(f)
+	count := 0
 	for s.Scan() {
-		parseUtxos(s.Text())
+		u := parseUtxos(s.Text())
+		ulist = append(ulist, u)
+		count++
 	}
 	t, _ := strconv.Atoi(target)
 	if len(args) == 3 && args[2] == "-bonus" {
-		subsetBonus(t)
+		subsetBonus(ulist, t)
 	} else {
-		findPair(t)
+		findPair(ulist, t)
 
 	}
 

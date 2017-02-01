@@ -12,6 +12,11 @@ Golang 1.7 or later.<br />
 5. `./find-pair <file> <target>`<br/>
 **NOTE:** To run the bonus for this challenge, use `./find-pair <file> <target> -bonus`
 
+##Runtime
+Runtime=`O(n)` <br/>
+Since the array is sorted, using two pointers that each move towards the center incrementing/decrementing based on the value of the current sum at the two pointers.<br />
+If left surpasses right, no such sum exists and we return "Not possible."
+
 ##Success Examples
 ```bash
 cat utxos1.txt
@@ -53,8 +58,8 @@ cat utxos4.txt
 
 ./find-pair utxos4.txt 3 -bonus
    abcdef 1 e478ab 1 74738a 1
-./find-pair utxos4.txt 3 -bonus
-   oooooo 3
+./find-pair utxos4.txt 25 -bonus
+abcdef 1 e478ab 1 74738a 1 a84739 22
 ```
 
 ##Errored Examples
