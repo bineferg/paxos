@@ -1,10 +1,10 @@
-#Challenge 2
+# Challenge 2
 
-##Dependencies
+## Dependencies
 Golang 1.7 or later.<br />
 **Note:** This program uses only Golang standard library
 
-##Setup
+## Setup
 1. Clone the repo.
 2. Setup go workspace appropriately (if not already setup)
 3. `cd $GOPATH/github.com/paxos/find-pair
@@ -12,12 +12,12 @@ Golang 1.7 or later.<br />
 5. `./find-pair <file> <target>`<br/>
 **NOTE:** To run the bonus for this challenge, use `./find-pair <file> <target> -bonus`
 
-##Runtime
+## Runtime
 Runtime=`O(n)` <br/>
 Since the array is sorted, using two pointers that each move towards the center incrementing/decrementing based on the value of the current sum at the two pointers.<br />
 If left surpasses right, no such sum exists and we return "Not possible."
 
-##Success Examples
+## Success Examples
 ```bash
 cat utxos1.txt
    abcdef 5
@@ -62,7 +62,7 @@ cat utxos4.txt
 abcdef 1 e478ab 1 74738a 1 a84739 22
 ```
 
-##Errored Examples
+## Errored Examples
 ```bash
 cat utxos5.txt
     147bce 2
