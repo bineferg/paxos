@@ -1,14 +1,14 @@
-#Challenge 1
+# Challenge 1
 
-##Dependencies
+## Dependencies
 Golang 1.7 or later.<br />
 **Note:** This program uses `github.com/gorilla/mux`  and `github.com/asaskevich/govalidator` as a third party dependency
 
-##The Service
+## The Service
 This service runs on an AWS instance.<br/>
 Included in this repo is the init script used to run the service `messages.sh` as well as the very simple nginx configuration which works as a reverse proxy and lives on the AWS instance.
 
-##Example success curl commands
+## Example success curl commands
 ```bash
 curl -X POST -H "Content-Type: application/json" -d '{"message":"Eva Fineberg"}' http://ec2-54-214-173-4.us-west-2.compute.amazonaws.com/message
 {"digest":"9856266689cd9b96c7c54fe80aed98e7acfe2ce6f9260b227a25bd57c5a9c9d4"}
@@ -18,7 +18,7 @@ curl http://ec2-54-214-173-4.us-west-2.compute.amazonaws.com/message/9856266689c
 {"message":"Eva Fineberg"}
 ```
 
-##Example failed curl commands
+## Example failed curl commands
 ```bash
 curl -i -X POST -H "Content-Type: application/json" -d '{"blah"}' http://ec2-54-214-173-4.us-west-2.compute.amazonaws.com/message
    HTTP/1.1 400 Bad Request
@@ -54,5 +54,5 @@ curl -i http://ec2-54-214-173-4.us-west-2.compute.amazonaws.com/message/
    404 page not found
 ```
 
-##Notation
+## Notation
 Usually for more extensive restful apis I would deploy with swagger documentation.
